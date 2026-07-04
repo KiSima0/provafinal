@@ -96,15 +96,21 @@ class DatabaseHelper {
     );
   }
 
-  Future<int> deleteDisciplina(int id) async {
-    final db = await database;
+Future<int> deleteDisciplina(int id) async {
+  final db = await database;
 
-    return await db.delete(
-      'disciplinas',
-      where: 'id = ?',
-      whereArgs: [id],
-    );
-  }
+  await db.delete(
+    'atividades',
+    where: 'disciplinaId = ?',
+    whereArgs: [id],
+  );
+
+  return await db.delete(
+    'disciplinas',
+    where: 'id = ?',
+    whereArgs: [id],
+  );
+}
 
   Future<int> insertAtividade(
     Map<String, dynamic> atividade,
