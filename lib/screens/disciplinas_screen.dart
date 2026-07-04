@@ -73,6 +73,19 @@ class _DisciplinasScreenState
 
             TextButton(
               onPressed: () async {
+                if (nomeController.text.trim().isEmpty ||
+                   professorController.text.trim().isEmpty) {
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        'Preencha todos os campos.',
+                      ),
+                    ),
+                  );
+
+                  return;
+                }
 
                 final dados = {
                   'nome': nomeController.text,

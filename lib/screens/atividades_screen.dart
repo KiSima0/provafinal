@@ -106,6 +106,20 @@ class _AtividadesScreenState
 
             TextButton(
               onPressed: () async {
+                if (tituloController.text.trim().isEmpty ||
+                   descricaoController.text.trim().isEmpty ||
+                   dataController.text.trim().isEmpty) {
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        'Preencha todos os campos.',
+                      ),
+                    ),
+                  );
+
+                  return;
+                }
 
                 final dados = {
                   'titulo':
