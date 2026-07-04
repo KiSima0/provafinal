@@ -1,5 +1,7 @@
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
-import '../main.dart';
+
+import '../providers/theme_provider.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -12,23 +14,14 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState
     extends State<SettingsScreen> {
 
-  bool temaEscuro = false;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    temaEscuro =
-      Theme.of(context).brightness ==
-      Brightness.dark;
-  }
-
   bool notificacoes = true;
 
   String idioma = 'Português';
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider =
+      Provider.of<ThemeProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -46,17 +39,11 @@ class _SettingsScreenState
             title:
                 const Text('Tema Escuro'),
 
-            value: temaEscuro,
+            value: themeProvider.isDark,
 
-          onChanged: (valor) {
-
-          setState(() {
-            temaEscuro = valor;
-          });
-
-          StudyPlannerApp.of(context)
-            ?.toggleTheme(valor);
-          },
+            onChanged: (valor) {
+              themeProvider.toggleTheme(valor);
+            },
           ),
 
           ListTile(
