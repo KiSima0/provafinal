@@ -21,10 +21,38 @@ class _DisciplinasScreenState
   }
 
   Future<void> excluir(int id) async {
+  final confirmar = await showDialog<bool>(
+    context: context,
+    builder: (_) {
+      return AlertDialog(
+        title: const Text('Confirmar exclusão'),
+        content: const Text(
+          'Deseja realmente excluir esta disciplina?',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context, false);
+            },
+            child: const Text('Cancelar'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context, true);
+            },
+            child: const Text('Excluir'),
+          ),
+        ],
+      );
+    },
+  );
+
+  if (confirmar == true) {
     await db.deleteDisciplina(id);
 
     setState(() {});
   }
+}
 
   Future<void> abrirFormulario({
     Map<String, dynamic>? disciplina,
